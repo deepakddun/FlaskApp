@@ -11,7 +11,17 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <h1>My blog</h1>
+
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="{{url_for('home')}}">My Blog</a>
+    <form class="form-inline">
+      <a class="form-control mr-sm-2" href="{{url_for('register')}}" aria-label="Search">Register</a>
+      <a class="form-control mr-sm-2" href="{{url_for('login')}}" aria-label="Search">Login</a>
+    </form>
+  </nav>
+
+
+
 
     <!-- Optional JavaScript; choose one of the two! -->
 
