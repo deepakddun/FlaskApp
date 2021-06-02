@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container border">
+<div class="container border w-50 p-3">
 <form method="post" action="" novalidate>
     {{form.hidden_tag()}}
   <div class="form-group">
@@ -61,7 +61,7 @@
   </div>
 </form>
 </div>
-    <div class="my-auto py-3 container">
+    <div class="container w-50 p-3">
         Already have an account <a class="ml-2" href="{{url_for('login')}}" >Sign In</a>
     </div>
 

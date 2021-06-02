@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="media text-center">
+        <img src="{{ image_file }}" class="rounded-circle w-25 p-3" alt="pic">
+        <div class="media-body">
+            <div class="container border w-50 p-3">
+                <form method="post" action="" enctype="multipart/form-data" novalidate>
+                    {{form.hidden_tag()}}
+                    <div class="form-group">
+                        {{ form.username.label() }}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span> {{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.username(class="form-control")}}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{form.email.label()}}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                             <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                 {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.email(class="form-control")}}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.picture.label() }}
+                        {% if form.picture.errors %}
+                            {{ form.picture(class="form-control-file") }}
+                            {% for error in form.picture.errors %}
+                              </br> <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% else %}
+                            {{form.picture(class="form-control-file")}}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{form.submit(class="btn btn-outline-primary")}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
