@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, flash, get_flashed_messages, request
+from flask import render_template, url_for, redirect, flash, get_flashed_messages, request ,abort
 from flaskapp.flaskblog.models import User, Post
 from flaskapp.flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from flaskapp.flaskblog import app, db, bcryp
@@ -104,3 +104,43 @@ def new_post():
         return redirect(url_for('home'))
     return render_template('create_post.html', form=form)
     # return render_template('create_post.html', form=form)
+
+
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
+@login_required
+def post(post_id):
+    user_post = Post.query.get_or_404(post_id)
+    return render_template('post.html', post=user_post)
+
+
+@app.route("/post/<int:post_id>/update", methods=["GET", "POST"])
+@login_required
+def update_post(post_id):
+    user_post = Post.query.get_or_404(post_id)
+    form = PostForm()
+    if user_post.author != current_user:
+        abort(403)
+    if form.validate_on_submit():
+        user_post.title = form.title.data
+        user_post.content = form.content.data
+        db.session.commit()
+        return redirect(url_for('post' , post_id = user_post.id))
+    elif request.method == 'GET':
+        form.title.data = user_post.title
+        form.content.data = user_post.content
+        return render_template ('create_post.html', form=form)
+
+
+@app.route("/post/<int:post_id>/delete",methods=["GET", "POST"])
+@login_required
+def delete_post(post_id):
+    print("Test")
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+

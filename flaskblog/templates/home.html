@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for post in posts %}
-        <div class="card" style="width: 18rem;">
+        <div class="card mt-5" style="width: 14rem;">
+            <img src="{{url_for('static' , filename='profile_pics/' + post.author.image_file)}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">{{post["title"]}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">By {{post["author"]["username"]}} on {{ post["date_posted"].strftime("%m/%d/%Y") }}</h6>
+                <a class="card-link" href="#">{{post["author"]["username"]}}</a>
+                <h6 class="card-title">{{ post["date_posted"].strftime("%m/%d/%Y") }}</h6>
+                <a href="{{url_for('post',post_id=post.id)}}" class="card-link">{{post["title"]}}</a>
                 <p class="card-text">{{post["content"]}}</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+
             </div>
         </div>
     {% endfor %}
