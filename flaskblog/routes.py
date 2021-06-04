@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, get_flashed_messages, request ,abort
-from flaskapp.flaskblog.models import User, Post
-from flaskapp.flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from flaskapp.flaskblog import app, db, bcryp
+from FlaskApp.flaskblog.models import User, Post
+from FlaskApp.flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from FlaskApp.flaskblog import app, db, bcryp
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
@@ -128,7 +128,7 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = user_post.title
         form.content.data = user_post.content
-        return render_template ('create_post.html', form=form)
+        return render_template('create_post.html', form=form,update=True , post_id = user_post.id)
 
 
 @app.route("/post/<int:post_id>/delete",methods=["GET", "POST"])
