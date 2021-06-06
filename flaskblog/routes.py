@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, get_flashed_messages, request ,abort
-from FlaskApp.flaskblog.models import User, Post
-from FlaskApp.flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from FlaskApp.flaskblog import app, db, bcryp
+from flaskapp.flaskblog.models import User, Post
+from flaskapp.flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from flaskapp.flaskblog import app, db, bcryp
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
@@ -10,8 +10,10 @@ from PIL import Image
 
 @app.route("/")
 def home():
-    posts = Post.query.all()
-
+    #posts = Post.query.all()
+    page = request.args.get('page',1,type=int)
+    print(f'The current page is {page}')
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,per_page=4)
     return render_template("home.html", posts=posts)
 
 
@@ -141,6 +143,18 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route("/user_post/<string:username>",methods=["GET", "POST"])
+@login_required
+def user_post(username):
+    print("Test")
+    user = User.query.filter_by(username=username).first_or_404()
+
+    page = request.args.get('page', 1, type=int)
+    print(page)
+    posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=4)
+    return render_template("user_post.html", posts=posts , user = user)
 
 
 

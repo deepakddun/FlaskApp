@@ -11,7 +11,7 @@
 # app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{username}:{password}@{server}/flaskdb"
 # db = SQLAlchemy(app)
 
-from FlaskApp.flaskblog import app
+from flaskapp.flaskblog import app
 
 
 if __name__ == '__main__':
