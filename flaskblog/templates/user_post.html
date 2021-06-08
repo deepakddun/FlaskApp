@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+    <h2>Posts for {{user.username}}. Total Post = {{posts.total}}</h2>
     {% for post in posts.items %}
 
         <div class="card mb-3" style="max-width: 540px;">
